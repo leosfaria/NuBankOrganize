@@ -1,0 +1,13 @@
+{
+  "name": "NuBankOrganize",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node src/Main.js"
+  },
+  "dependencies": {
+    "bignumber.js": "2.1.4",
+    "command-line-args": "^3.0.3",
+    "node-fetch": "^2.6.0"
+  }
+}
