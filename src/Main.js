@@ -29,7 +29,7 @@ async function main (){
     const authenticatedData = await httpService.authenticateWithQrCode(discoveryAPPUrls.lift, qrCodeData, loginCredentials.access_token)
 
     if(authenticatedData.error) {
-        console.log("Something goes wrong: " + loginCredentials.error)
+        console.log("Something goes wrong: " + authenticatedData.error)
         process.exit(1)
     }
 
