@@ -3,6 +3,7 @@ var readline = require('readline-sync')
 var fs = require('fs')
 var httpService = require('./HttpService')
 var qrCodeService = require('./QRCodeService')
+var reportService = require('./ReportService')
 
 const optionDefinitions = [
     { name: 'cpf', type: String },
@@ -64,6 +65,8 @@ async function main (){
         feed = await getFeed()
     }
     
+    reportService.createCategories(feed.events)
+
     console.log(feed.events.find(e => e.id === "5d8cee40-8026-4f6d-a4f9-61965f24c63e" ))
 }
 
