@@ -10,9 +10,14 @@ const optionDefinitions = [
     { name: 'password', alias: 'p', type: String }
 ];
 
-async function login() {
+async function login(options) {
     const discoveryUrls = await httpService.nuDiscovery() 
     const discoveryAPPUrls = await httpService.nuDiscoveryAPP() 
+
+    if(!options.cpf && !options.password) {
+        console.log("To Login you have to pass your cpf and password")
+        process.exit(1)
+    }
 
     const loginCredentials = await httpService.nuLogin(discoveryUrls.login, options.cpf, options.password)
     
@@ -53,15 +58,15 @@ async function main (){
     const options = commandLineArgs(optionDefinitions);
 
     if(!fs.existsSync('./.nubankConfigrc')) {
-        await login()
+        await login(options)
     }
 
-    const feed = await getFeed()
+    let feed = await getFeed()
 
     if(feed.error) {
         console.log("Can't get feed: " + feed.error)
         console.log("Login maybe expired")
-        login()
+        await login(options)
         feed = await getFeed()
     }
     
