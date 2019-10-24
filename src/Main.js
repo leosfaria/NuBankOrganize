@@ -49,7 +49,6 @@ async function login(options) {
 
 async function getFeed() {
     const authenticatedData = JSON.parse(fs.readFileSync('./.nubankConfigrc'))
-    console.log(authenticatedData)
 
     return await httpService.getCardFeed(authenticatedData.accessToken, authenticatedData.feedUrl )
 }
