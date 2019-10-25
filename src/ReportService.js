@@ -17,13 +17,21 @@ function mountTagList(event, tagList) {
             }]  
         } else {
             const description = tagList.find(t => t.description == tagDescription)
+            let descriptionFound = false
 
-            if(description) {
-                description
+            for(let i = 0; i < tagList.length; i++) {
+                if(tagList[i].description === tagDescription) {
+                    tagList[i].amount += event.amount
+                    descriptionFound = true
+                }
             }
-            console.log("tagDescription: " + tagDescription)
-            console.log("Description: " + JSON.stringify(description))
-            console.log("tagList: " + JSON.stringify(tagList))
+
+            if(!descriptionFound) {
+                tagList.push({
+                    description: tagDescription,
+                    amount: event.amount
+                })
+            }
 
             return tagList
         }
