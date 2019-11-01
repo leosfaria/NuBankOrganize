@@ -2,6 +2,24 @@ var moment = require("moment")
 
 let categories = {}
 
+function mountTagDetails(event) {
+    let latitude, longitude
+        
+    if(event.details) {
+        latitude = event.details.lat
+        longitude = event.details.lon
+    } 
+
+    return {
+        date: event.time,
+        amount: event.amount,
+        nuBankDescription: event.description,
+        nuBankTitle: event.title,
+        lat: latitude,
+        lon: longitude
+    }
+}
+
 function mountTagList(event, tagList) {
     try{
         let tagDescription = "outros"
@@ -13,15 +31,16 @@ function mountTagList(event, tagList) {
         if(!tagList || tagList.length == 0) {
             return [{
                 description: tagDescription,
-                amount: event.amount
+                amount: event.amount,
+                details: [mountTagDetails(event)]
             }]  
         } else {
-            const description = tagList.find(t => t.description == tagDescription)
             let descriptionFound = false
 
             for(let i = 0; i < tagList.length; i++) {
                 if(tagList[i].description === tagDescription) {
-                    tagList[i].amount += event.amount
+                    tagList[i].amount += event.amount,
+                    tagList[i].details.push(mountTagDetails(event))
                     descriptionFound = true
                 }
             }
@@ -29,7 +48,8 @@ function mountTagList(event, tagList) {
             if(!descriptionFound) {
                 tagList.push({
                     description: tagDescription,
-                    amount: event.amount
+                    amount: event.amount,
+                    details: [mountTagDetails(event)]
                 })
             }
 
