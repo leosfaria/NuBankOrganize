@@ -1,10 +1,26 @@
+import React from 'react';
 import styled from 'styled-components';
+
 import sidebarBg from '../../assets/img/sidebar-bg.png';
 
-export const Sidebar = styled.div`
-  display: inline-block;
+const StyledSidebar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 150px;
   height: 100%;
-  /* background-image: url(${sidebarBg}) no-repeat center center; */
-  background-color: red;
+  background: url(${sidebarBg}) no-repeat center center;
+
+  ul {
+    width: 100%;
+    list-style: none;
+  }
 `;
+
+export const Sidebar = props => (
+  <StyledSidebar>
+    <ul>
+      {props.children}
+    </ul>
+  </StyledSidebar>
+);
