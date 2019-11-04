@@ -2,6 +2,14 @@ var moment = require("moment")
 
 let categories = {}
 
+function getAmount(event) {
+    if(event.details && event.details.charges) {
+        return event.details.charges.amount
+    }
+
+    return event.amount
+}
+
 function mountTagDetails(event) {
     let latitude, longitude
         
@@ -12,7 +20,7 @@ function mountTagDetails(event) {
 
     return {
         date: event.time,
-        amount: event.amount,
+        amount: getAmount(event),
         nuBankDescription: event.description,
         nuBankTitle: event.title,
         lat: latitude,
@@ -31,7 +39,7 @@ function mountTagList(event, tagList) {
         if(!tagList || tagList.length == 0) {
             return [{
                 description: tagDescription,
-                amount: event.amount,
+                amount: getAmount(event),
                 details: [mountTagDetails(event)]
             }]  
         } else {
@@ -39,7 +47,7 @@ function mountTagList(event, tagList) {
 
             for(let i = 0; i < tagList.length; i++) {
                 if(tagList[i].description === tagDescription) {
-                    tagList[i].amount += event.amount,
+                    tagList[i].amount += getAmount(event),
                     tagList[i].details.push(mountTagDetails(event))
                     descriptionFound = true
                 }
@@ -48,7 +56,7 @@ function mountTagList(event, tagList) {
             if(!descriptionFound) {
                 tagList.push({
                     description: tagDescription,
-                    amount: event.amount,
+                    amount: getAmount(event),
                     details: [mountTagDetails(event)]
                 })
             }
@@ -65,11 +73,11 @@ function mountTagList(event, tagList) {
 function mountCategory(event, month) {
     if(!categories[month]) {
         categories[month] = {
-            amount: event.amount,
+            amount: getAmount(event),
             tags: mountTagList(event) 
         }
     } else {
-        categories[month].amount += event.amount
+        categories[month].amount += getAmount(event)
         categories[month].tags = mountTagList(event, categories[month].tags)
     }
 }
@@ -92,7 +100,7 @@ module.exports = {
                 mountCategory(event, month)
             }
 
-            // if(month === "October-2019") {
+            // if(month === "November-2019") {
             //     console.log("event: " + JSON.stringify(event, null, 2))
             // }
         }
