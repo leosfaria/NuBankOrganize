@@ -1,6 +1,7 @@
 var moment = require("moment")
 
 let categories = {}
+let glados = []
 
 function getAmount(event) {
     if(event.details && event.details.charges) {
@@ -8,6 +9,14 @@ function getAmount(event) {
     }
 
     return event.amount
+}
+
+function getInstallments(event) {
+    if(event.details && event.details.charges) {
+        return event.details.charges.count
+    }
+
+    return 1
 }
 
 function mountTagDetails(event) {
@@ -28,12 +37,24 @@ function mountTagDetails(event) {
     }
 }
 
+function addNewDataToGlados(event, tagDescription) {
+    glados.push({
+        date: event.time,
+        description: event.description,
+        title: event.title,
+        tag: tagDescription,
+        amount: getAmount(event),
+        installments: getInstallments(event)
+    })
+}
+
 function mountTagList(event, tagList) {
     try{
         let tagDescription = "outros"
         
         if(event.details && event.details.tags && event.details.tags.length > 0) {
             tagDescription = event.details.tags[0] //Este programa assume que vc coloca apenas uma tag por compra
+            addNewDataToGlados(event, tagDescription)
         } 
 
         if(!tagList || tagList.length == 0) {
@@ -106,6 +127,7 @@ module.exports = {
         }
 
         console.log(JSON.stringify(categories))
+        console.log(JSON.stringify(glados))
 
         return categories
     }
