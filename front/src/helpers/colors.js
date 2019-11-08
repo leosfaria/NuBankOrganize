@@ -1,5 +1,5 @@
 export const colors = {
-  primary: '',
+  primary: '#83C9CB',
   secondary: '',
   text: '',
   sidebarGradient: {
