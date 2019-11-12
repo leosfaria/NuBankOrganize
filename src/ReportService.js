@@ -3,6 +3,36 @@ var moment = require("moment")
 let categories = {}
 let glados = []
 
+function gladosWhatTagIsThis(event, tagDescription) {
+    const match = glados.filter( item => event.description == item.description && event.title == item.title )
+
+    if(match.length == 0) {
+        return tagDescription
+    }
+
+    let map = {}
+
+    for(let occurrency of match) {
+        if(map[occurrency.tag]) {
+            map[occurrency.tag]++
+        } else {
+            map[occurrency.tag] = 1
+        }
+    }
+
+    let tagDescriptionFound = tagDescription
+    let tagCount = 0
+
+    Object.keys(map).forEach( key => {
+        if(map[key] > tagCount) {
+            tagCount = map[key]
+            tagDescriptionFound = key
+        }
+    } )
+
+    return tagDescriptionFound
+}
+
 function getAmount(event) {
     if(event.details && event.details.charges) {
         return event.details.charges.amount
@@ -55,7 +85,11 @@ function mountTagList(event, tagList) {
         if(event.details && event.details.tags && event.details.tags.length > 0) {
             tagDescription = event.details.tags[0] //Este programa assume que vc coloca apenas uma tag por compra
             addNewDataToGlados(event, tagDescription)
-        } 
+        }
+        
+        if(tagDescription == "outros") {
+            tagDescription = gladosWhatTagIsThis(event, tagDescription)
+        }
 
         if(!tagList || tagList.length == 0) {
             return [{
@@ -107,8 +141,8 @@ module.exports = {
     createCategories: (events) => {        
         categories = {}
 
-        for(let eventIndex in events) {
-            const event = events[eventIndex]
+        for(let i = events.length - 1; i > 0; i--) {
+            const event = events[i]
             const date = moment(event.time)
             const month = date.format('MMMM-YYYY')
             
@@ -127,7 +161,7 @@ module.exports = {
         }
 
         console.log(JSON.stringify(categories))
-        console.log(JSON.stringify(glados))
+        // console.log(JSON.stringify(glados))
 
         return categories
     }
