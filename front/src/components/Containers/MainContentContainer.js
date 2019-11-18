@@ -4,7 +4,7 @@ export const MainContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 40px;
+  padding: 65px;
 
   h1 {
     font-weight: bold;
