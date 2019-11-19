@@ -71,7 +71,7 @@ export const Home = props => {
 
               <Columns.Column size={4}>
                 <Card>
-                  <h2>Últimas compras</h2>
+                  <h2>Últimas compras do mês</h2>
                 </Card>
               </Columns.Column>
             </Columns>
