@@ -1,0 +1,14 @@
+{
+  "name": "nubank-organize",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start": "lerna run --parallel start",
+    "start:front": "lerna run --stream --scope front start",
+    "start:back": "lerna run --stream --scope back start"
+  },
+  "devDependencies": {
+    "lerna": "^3.18.5"
+  }
+}
