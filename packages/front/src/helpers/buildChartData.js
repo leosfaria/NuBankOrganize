@@ -7,7 +7,7 @@ const colorsCache = [];
 const getColor = () => {
   const color = getRandomHexColor();
 
-  if (!colorsCache.includes(color)) {
+  if (!colorsCache.includes(color) || colorsCache.length >= color.length) {
     colorsCache.push(color);
     return color;
   } else {
