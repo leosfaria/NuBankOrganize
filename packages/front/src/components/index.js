@@ -6,3 +6,7 @@ export * from './Sidebar/Sidebar';
 export * from './Sidebar/SidebarItem';
 
 export * from './Card/Card';
+
+export * from './PurchasesList/PurchasesList';
+
+export * from './TriangleBackground/TriangleBackground';

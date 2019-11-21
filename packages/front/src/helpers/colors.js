@@ -7,4 +7,5 @@ export const colors = {
     to: 'rgba(196, 196, 196, 0)'
   },
   white: '#fff',
+  gray: '#e9e9e9',
 };

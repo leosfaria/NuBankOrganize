@@ -7,23 +7,25 @@ import {
   MainContentContainer,
   Sidebar,
   SidebarItem,
-  Card
+  Card,
+  PurchasesList,
+  TriangleBackground,
 } from '../../components';
 
-import { ReactComponent as Triangle } from '../../assets/img/triangle.svg'
 import moneyImg from '../../assets/img/icons/money.png';
 import priceTagImg from '../../assets/img/icons/price-tag.png';
 import calendarImg from '../../assets/img/icons/calendar.png';
 
 import { buildChartData } from '../../helpers';
 import { report } from '../../mock/report';
+import { purchases } from '../../mock/purchases';
 
 const expensesData = buildChartData(report);
 
 export const Home = props => {
   return (
     <Fragment>
-      {/* <Triangle className="triangle-bg" /> */}
+      <TriangleBackground />
 
       <FullWidthContainer>
         <Sidebar>
@@ -72,6 +74,8 @@ export const Home = props => {
               <Columns.Column size={4}>
                 <Card>
                   <h2>Últimas compras do mês</h2>
+
+                  <PurchasesList purchases={purchases} />
                 </Card>
               </Columns.Column>
             </Columns>
