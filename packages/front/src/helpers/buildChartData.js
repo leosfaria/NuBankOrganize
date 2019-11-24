@@ -1,4 +1,4 @@
-import { generateHexColor, getRandomHexColor } from './hexColor';
+import { getRandomHexColor } from './hexColor';
 import { money } from './money';
 import { translateKey } from './translateKey';
 
